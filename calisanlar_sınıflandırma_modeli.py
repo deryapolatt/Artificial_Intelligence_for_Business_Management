@@ -59,3 +59,23 @@ y_pred = random_forest.predict(X_test)
 
 accuracy = random_forest.score(X_test, y_test)
 print("Model Accuracy:", accuracy)
+
+
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {
+    'n_estimators': [50, 100, 150],
+    'max_depth': [None, 5, 10],
+    'min_samples_split': [2, 5, 10]
+}
+
+rf_model = RandomForestClassifier()
+grid_search = GridSearchCV(rf_model, param_grid, cv=5)
+grid_search.fit(X_train, y_train)
+
+best_rf_model = grid_search.best_estimator_
+best_rf_model.fit(X_train, y_train)
+
+score = best_rf_model.score(X_test, y_test)
+print("Random Forest - En iyi parametreler:", grid_search.best_params_)
+print("Random Forest - Doğruluk skoru:", score)
