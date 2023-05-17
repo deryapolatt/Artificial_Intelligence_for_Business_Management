@@ -79,3 +79,24 @@ best_rf_model.fit(X_train, y_train)
 score = best_rf_model.score(X_test, y_test)
 print("Random Forest - En iyi parametreler:", grid_search.best_params_)
 print("Random Forest - Doğruluk skoru:", score)
+
+# Tahmin İşlemi
+import pandas as pd
+yeni_veri = pd.DataFrame({
+    'Age': [35],
+    'DailyRate': [500],
+    'YearsAtCompany': [7],
+    'YearsInCurrentRole': [3],
+    'YearsSinceLastPromotion': [2],
+    'Sales': [1],
+    'Medical':[1]
+
+})
+tum_sutunlar = ['Age',	'Attrition',	'DailyRate','YearsAtCompany','YearsInCurrentRole',	'YearsSinceLastPromotion',	'Human Resources',	'Research & Development',	'Sales',	'Human Resources',	'Life Sciences',	'Marketing',	'Medical',	'Other','Technical Degree']
+
+eksik_sutunlar = set(tum_sutunlar) - set(yeni_veri.columns)
+for sutun in eksik_sutunlar:
+    yeni_veri[sutun] = 0
+
+tahmin = random_forest.predict(yeni_veri)
+print("Tahmin:", tahmin)
